@@ -61,9 +61,7 @@ MODEL_CLASSES = {
     "auto": (AutoConfig, AutoModel, AutoTokenizer),
     "bart": (BartConfig, BartForConditionalGeneration, BartTokenizer),
     "bert": (BertConfig, BertModel, BertTokenizer),
-    "roberta": (RobertaConfig, RobertaModel, RobertaTokenizer),
-    # "blender": (BlenderbotSmallConfig, BlenderbotSmallForConditionalGeneration, BlenderbotSmallTokenizer),
-    # "blender-large": (BlenderbotConfig, BlenderbotForConditionalGeneration, BlenderbotTokenizer)
+
 }
 
 

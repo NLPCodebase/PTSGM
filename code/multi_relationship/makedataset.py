@@ -72,24 +72,6 @@ for data_file_name in data_list:
         print(data_file_name)
         print(event_chains)
 
-        '''
-        # 获取长度为5的事件链，其中第一个节点属于first_event_keys
-        ret_event_chains = []
-        for event_chain in event_chains:
-            if len(event_chain) < 5:
-                continue
-            if event_chain[0] not in first_event_keys:
-                continue
-
-            first_events = [x for x in event_chain if x in first_event_keys]
-            for i in range(len(event_chain)):
-                if event_chain[i] in first_events:
-                    second_events = event_chain[i + 1:]
-                    tmp_event_chains = list(combinations(second_events, 4))
-                    tmp_event_chains = [[event_chain[i]] + list(x) for x in tmp_event_chains]
-                    ret_event_chains += tmp_event_chains
-       '''
-
         # 事件链去重
         ret = []
         for event_item in event_chains:
@@ -133,7 +115,7 @@ for data_file_name in data_list:
                             evemt2_list.append(event2)
                             labels.append("因果关系")
 
-                #Y列顺承关系
+            #Y列顺承关系
                         if node in event_chain and data['event_relation'][start][node] == "顺承关系":
                             for sentence in data["event_element"]:
                                 for event in sentence["event_graph"]:
@@ -152,7 +134,7 @@ for data_file_name in data_list:
             
 
                     
-#Y列无关系
+            #Y列无关系
             if len(event_chain) > 4:
                 i=0
                 while i < 4:
@@ -181,5 +163,4 @@ print(len(Source))
 print(len(Answer))
 dataframe = pd.DataFrame({'Source sentence':Source,'Answer sentence':Answer,'Event1':event1_list,'Event2':evemt2_list,'labels':labels})
 
-#将DataFrame存储为csv,index表示是否显示行名，default=True
 dataframe.to_csv("./data/event_train.csv",index=False,sep=',',encoding = 'gbk')

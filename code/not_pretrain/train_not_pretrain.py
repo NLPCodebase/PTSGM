@@ -14,7 +14,7 @@ transformers_logger.setLevel(logging.WARNING)
 # data = pd.read_csv("./data/train.csv", sep=',',encoding = 'gbk',usecols=[0,1]).values.tolist()
 data = pd.read_csv("./data/train_not_pretrain.csv", sep=',',encoding = 'UTF-8',usecols=[0,1]).values.tolist()
 df = pd.DataFrame(data, columns=["input_text", "target_text"])
-train_df=df.sample(frac=0.8)#按0.8比例随机采样
+train_df=df.sample(frac=0.8)
 print(len(train_df))
 eval_df=df[~df.index.isin(train_df.index)]
 

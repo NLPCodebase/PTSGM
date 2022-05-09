@@ -41,8 +41,7 @@ def predict_relation(input_TXT, event1, event2):  # 预测一个句子中两个�
 
     output_ids = tokenizer(temp_list, return_tensors='pt',
                            padding=True, truncation=True)['input_ids']
-    # 加一个unused字符
-    # output_ids[:, 0] = 2
+
     output_length_list = [0]*3
 
     base_length = ((tokenizer(temp_list[2], return_tensors='pt', padding=True, truncation=True)[
@@ -79,14 +78,10 @@ def cal_time(since):
 
 TokenModel = "./exp/template"
 tokenizer = AutoTokenizer.from_pretrained(TokenModel)
-# input_TXT = "Japan began the defence of their Asian Cup title with a lucky 2-1 win against Syria in a Group C championship match on Friday ."
-
 model = BartForConditionalGeneration.from_pretrained('./exp/template')
-# model = BartForConditionalGeneration.from_pretrained('../dialogue/bart-large')
+
 model.eval()
 model.config.use_cache = False
-# input_ids = tokenizer(input_TXT, return_tensors='pt')['input_ids']
-# print(input_ids)
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 examples = []
 
@@ -140,41 +135,3 @@ with open('./pred.txt', 'w') as f0:
     f0.writelines(preds_list)
 with open('./gold.txt', 'w') as f0:
     f0.writelines(trues_list)
-'''
-count = 0
-sum = 0
-for lable1,lable2 in  zip(preds_list,trues_list):
-    if lable1==lable2:
-        count +=1
-        sum +=1
-    else:
-        sum +=1
-print(count,sum,count/sum)
-print(classification_report(trues_list,preds_list))
-cm = confusion_matrix(trues_list,preds_list)
-sns.heatmap(cm,cmap = sns.color_palette("Blues"),annot = True)
-
-
-plt.ylabel("true label")
-plt.xlabel("predict label")
-plt.show()
-
-results = {
-    "F": f1_score(trues_list, preds_list,average='weighted'),
-    "P": precision_score(trues_list, preds_list,average='weighted'),
-    "R": recall_score(trues_list, preds_list,average='weighted')
-    # average has to be one of (None, 'micro', 'macro', 'weighted', 'samples')
-    # "F": f1_score(trues_list, preds_list,average=None),
-    # "P": precision_score(trues_list, preds_list,average=None),
-    # "R": recall_score(trues_list, preds_list,average=None)
-}
-print(results)
-for num_point in range(len(preds_list)):
-    preds_list[num_point] = ' '.join(preds_list[num_point]) + '\n'
-    trues_list[num_point] = ' '.join(trues_list[num_point]) + '\n'
-with open('./pred.txt', 'w') as f0:
-    f0.writelines(preds_list)
-with open('./gold.txt', 'w') as f0:
-    f0.writelines(trues_list)
-
-'''

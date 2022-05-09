@@ -24,14 +24,14 @@ dataset_dir = os.path.join(
 data_list = os.listdir(dataset_dir)
 for data in data_list:
 
-    # 读标注数据
+    
     annotated_data = etree.parse(
         "D:/data/Causal-TimeBank-main/Causal-TimeBank-CAT" + "/" + data,
         etree.XMLParser(remove_blank_text=True),
     )
     # result = annotated_data.xpath('//token[@t_id="2"]//text()')
     root_annotated_data = annotated_data.getroot()
-    # 所有事件及其对应token
+    
     action_dict = collections.defaultdict(list)
 
     for elem in root_annotated_data.findall("Markables/"):
@@ -40,7 +40,7 @@ for data in data_list:
                 event_mention_id = elem.get("id", "nothing")
                 token_mention_id = token_id.get("id", "nothing")
                 action_dict[event_mention_id].append(token_mention_id)
-    # 添加有因果关系的事件对
+    
     Relation = []
     counter = 0
     for elem in root_annotated_data.findall("Relations/CLINK/"):
@@ -114,7 +114,7 @@ for data in data_list:
         ):
             sentence2_str += word + " "
 
-        # 写入文件
+        
         event1.append(event1_str)
         event2.append(event2_str)
         Answer.append(event1_str + "is the cause of " + event2_str)
@@ -124,8 +124,7 @@ for data in data_list:
         else:
             Source.append(sentence1_str + sentence2_str)
 
-    # 添加没有关系的事件对
-    # 随机选事件对,检测事件对是否在文件中存在
+    
 
     for i in range(max(3,len(Relation))):
         random_event_pair = random.sample(list(action_dict), 2)
@@ -200,7 +199,7 @@ for data in data_list:
             ):
                 sentence2_str += word + " "
 
-            # 加入文件
+            
 
             event1.append(event1_str)
             event2.append(event2_str)
@@ -224,6 +223,6 @@ dataframe = pd.DataFrame(
     }
 )
 
-# 将DataFrame存储为csv,index表示是否显示行名，default=True
+
 dataframe.to_csv("D:/data/Causal-TimeBank-main/event_causal_timebank.csv",
                  index=False, sep=",", encoding="UTF-8")

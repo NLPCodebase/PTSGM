@@ -30,18 +30,18 @@ for folder in folder_list:
         if data[len(data) - 4 :] != ".xml":
             continue
         flag = False
-        # 读标注数据
+
         annotated_data = etree.parse(
             "D:/data/EventStoryLine-master/annotated_data/v1.0/" + folder + "/" + data,
             etree.XMLParser(remove_blank_text=True),
         )
         # result = annotated_data.xpath('//token[@t_id="2"]//text()')
         root_annotated_data = annotated_data.getroot()
-        # 检查是否有plot_link
+
         for elem in root_annotated_data.findall("Relations/"):
             if elem.tag == "PLOT_LINK":
                 flag = TRUE
-        # 读关系数据
+
         if flag:
 
             f = open(
@@ -51,8 +51,8 @@ for folder in folder_list:
                 + data[: len(data) - 4],
                 "r",
             )
-            Relation = f.readlines()  # 直接将文件中按行读到list里
-            # 添加有因果关系的事件对
+            Relation = f.readlines()  
+            
             for event_pair in Relation:
                 event1_str = ""
                 event2_str = ""
@@ -110,7 +110,7 @@ for folder in folder_list:
                 ):
                     sentence2_str += word + " "
 
-                # 根据关系调整顺序
+                
                 if event_pair.split("\t")[2] == "PRECONDITION\n":
                     
                     event1.append(event1_str)
@@ -133,9 +133,6 @@ for folder in folder_list:
                     else:
                         Source.append(sentence2_str + sentence1_str)
 
-            # 添加没有关系的事件对
-
-            # 选择所有action
             action_dict = collections.defaultdict(list)
 
             for elem in root_annotated_data.findall("Markables/"):
@@ -147,7 +144,7 @@ for folder in folder_list:
                         token_mention_id = token_id.get("t_id", "nothing")
                         action_dict[event_mention_id].append(token_mention_id)
 
-            # 随机选20个事件对,检测事件对是否在文件中存在
+            
 
             for i in range(20):
                 random_event_pair = random.sample(list(action_dict), 2)
@@ -222,7 +219,6 @@ for folder in folder_list:
                     ):
                         sentence2_str += word + " "
 
-                    # 加入文件
                    
                     event1.append(event1_str)
                     event2.append(event2_str)
@@ -238,7 +234,7 @@ for folder in folder_list:
                     else:
                         Source.append(sentence1_str + sentence2_str)
 
-            f.close()  # 关闭文件
+            f.close()  
 
 
 dataframe = pd.DataFrame(
@@ -251,6 +247,5 @@ dataframe = pd.DataFrame(
     }
 )
 
-# 将DataFrame存储为csv,index表示是否显示行名，default=True
 dataframe.to_csv("./data/event_train_eventstoryline.csv", index=False, sep=",", encoding="UTF-8")
 

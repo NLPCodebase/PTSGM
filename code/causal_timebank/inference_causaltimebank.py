@@ -27,7 +27,7 @@ class InputExample():
         self.labels = labels
 
 
-def predict_relation(input_TXT, event1, event2):  # 预测一个句子中两个事件的关系
+def predict_relation(input_TXT, event1, event2):  
     input_TXT = [input_TXT]*2
     input_ids = tokenizer(input_TXT, return_tensors='pt')['input_ids']
     model.to(device)
@@ -40,7 +40,7 @@ def predict_relation(input_TXT, event1, event2):  # 预测一个句子中两个�
 
     output_ids = tokenizer(temp_list, return_tensors='pt',
                            padding=True, truncation=True)['input_ids']
-    # 加一个unused字符
+    
     output_ids[:, 0] = 2
     output_length_list = [0]*2
 
@@ -87,10 +87,7 @@ model = BartForConditionalGeneration.from_pretrained('./exp/causaltimebank')
 # model = BartForConditionalGeneration.from_pretrained('D:/bart-base')
 
 model.eval()
-
 model.config.use_cache = False
-# input_ids = tokenizer(input_TXT, return_tensors='pt')['input_ids']
-# print(input_ids)
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 examples = []
 
