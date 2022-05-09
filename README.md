@@ -9,11 +9,11 @@ Taking the event_storyline as an example:
 
 The files in this folder are the code to experiment on this dataset.  
 
-makedataset-eventstoryline.py corresponds to the creat template module.  
+makedataset_eventstoryline.py corresponds to the creat template module.  
 
-train-eventstoryline.py corresponds to the relation inference module.  
+train_eventstoryline.py corresponds to the relation inference module.  
 
-inference-eventstoryline.py corresponds to the relation inference module.  
+inference_eventstoryline.py corresponds to the relation inference module.  
 
 
 # Introduction of Data
