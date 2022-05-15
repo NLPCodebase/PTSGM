@@ -126,7 +126,7 @@ for data in data_list:
 
     
 
-    for i in range(max(3,len(Relation))):
+    for i in range(max(1,len(Relation))):
         random_event_pair = random.sample(list(action_dict), 2)
         event1_token_id = "_".join(action_dict[random_event_pair[0]])
         event2_token_id = "_".join(action_dict[random_event_pair[1]])
