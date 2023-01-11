@@ -15,4 +15,4 @@ train_eventstoryline.py corresponds to the prompt-tunning module.
 inference_eventstoryline.py corresponds to the relation inference module.  
 
 # Introduction of Data
-Similarly, three different dataset examples are provided in the this folder.  
+Similarly, three different sets of dataset examples are provided in the this folder.  
